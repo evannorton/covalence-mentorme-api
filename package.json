@@ -1,0 +1,42 @@
+{
+    "name": "in-class-db-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server/lib/index.js",
+    "scripts": {
+        "build:server": "babel ./server/src -d ./server/lib",
+        "dev": "source ENV_VAR && concurrently -k \"npm run watch:server\" \"nodemon --watch server/lib --delay 1\"",
+        "prepare": "npm run build:server",
+        "start": "npm run build:server && npm run start:server",
+        "start:server": "node server/lib/index.js",
+        "watch:server": "babel ./server/src -w -d ./server/lib"
+    },
+    "author": "Leavitt, Norton, Pierson",
+    "license": "ISC",
+    "dependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.0",
+        "babel-loader": "^7.1.2",
+        "babel-preset-env": "^1.6.1",
+        "babel-preset-react": "^6.24.1",
+        "bcrypt": "^1.0.3",
+        "express": "^4.16.2",
+        "isomorphic-fetch": "^2.2.1",
+        "morgan": "^1.9.0",
+        "mysql": "^2.15.0",
+        "passport": "^0.4.0",
+        "passport-http-bearer": "^1.0.1",
+        "passport-local": "^1.0.0",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0",
+        "react-router-dom": "^4.2.2",
+        "react-stripe-elements": "^1.4.1",
+        "stripe": "^5.4.0",
+        "uuid": "^3.2.1",
+        "webpack": "^3.10.0"
+    },
+    "devDependencies": {
+        "concurrently": "^3.5.1",
+        "nodemon": "^1.14.12"
+    }
+}
