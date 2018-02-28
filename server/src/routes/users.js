@@ -6,7 +6,7 @@ import { generateHash } from "../utils/security";
 let router = Router();
 let users = new Table("Users");
 
-router.get("/id?", (req, res) => {
+router.get("/:id?", (req, res) => {
     let id = req.params.id;
     if (id) {
         users.getOne(id)
