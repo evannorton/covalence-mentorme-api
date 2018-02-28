@@ -30,12 +30,14 @@ router.get("/:id?", (req, res) => {
 router.post("/", (req, res) => {
     let name = req.body.name;
     let email = req.body.email;
+    let usertype = req.body.usertype;
     generateHash(req.body.password)
         .then((hash) => {
             let user = {
                 name,
                 email,
-                hash
+                hash,
+                usertype
             };
             users.insert(user)
                 .then((result) => {
