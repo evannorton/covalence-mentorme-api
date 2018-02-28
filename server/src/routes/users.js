@@ -28,10 +28,13 @@ router.get("/:id?", (req, res) => {
 });
 
 router.post("/", (req, res) => {
+    let name = req.body.name;
+    let email = req.body.email;
     generateHash(req.body.password)
         .then((hash) => {
             let user = {
-                email: req.body.email,
+                name,
+                email,
                 hash
             };
             users.insert(user)
