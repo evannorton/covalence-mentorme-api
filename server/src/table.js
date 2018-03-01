@@ -52,6 +52,7 @@ class Table {
         let sql = `DELETE FROM ${this.tableName} WHERE id = ${id}`;
         return executeQuery(sql);
     }
+
 }
 
 export default Table;

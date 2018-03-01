@@ -5,16 +5,18 @@ import Table from "../table";
 import { encode, decode } from "../utils/tokens";
 import { checkPassword } from "../utils/security";
 
-let usersTable = new Table("Users");
-let tokensTable = new Table("Tokens");
+let users = new Table("Users");
+let tokens = new Table("Tokens");
 
 function configurePassport(app) {
     passport.use(new LocalStrategy({
         usernameField: "email",
         passwordField: "password",
+        passReqToCallback: true,
         sessions: false
-    }, (email, password, done) => {
-        usersTable.find({ email })
+    }, (req, email, password, done) => {
+        let usertype = req.body.usertype;
+        users.find({ email, usertype })
             .then((results) => {
                 return results[0]
             }).then((user) => {
@@ -23,7 +25,7 @@ function configurePassport(app) {
                         .then((matches) => {
                             if (matches) {
                                 //password is correct
-                                tokensTable.insert({ userid: user.id })
+                                tokens.insert({ userid: user.id })
                                     .then((idObj) => {
                                         return encode(idObj.id);
                                     }).then((token) => {
@@ -49,9 +51,9 @@ function configurePassport(app) {
         if (!tokenId) {
             return done(null, false, { message: "Invalid token" })
         }
-        tokensTable.getOne(tokenId)
+        tokens.getOne(tokenId)
             .then((tokenRecord) => {
-                return usersTable.getOne(tokenRecord.userid);
+                return users.getOne(tokenRecord.userid);
             }).then((user) => {
                 if (user) {
                     delete user.password;
