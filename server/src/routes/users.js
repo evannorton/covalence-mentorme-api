@@ -6,11 +6,18 @@ import { generateHash } from '../utils/security';
 let router = Router();
 let users = new Table('Users');
 
+router.get('/me', tokenMiddleware, isLoggedIn, (req, res) => {
+    delete req.user.hash;
+    console.log(req.user);
+    res.json(req.user);
+});
+
 router.get('/:id?', (req, res) => {
     let id = req.params.id;
     if (id) {
         users.getOne(id)
             .then((user) => {
+                delete user.hash;
                 res.send(user);
             })
             .catch((err) => {
@@ -19,6 +26,9 @@ router.get('/:id?', (req, res) => {
     } else {
         users.getAll()
             .then((users) => {
+                for (let i = 0; i < users.length; i++) {
+                    delete users[i].hash;
+                }
                 res.send(users);
             })
             .catch((err) => {
