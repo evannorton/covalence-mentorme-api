@@ -53,13 +53,6 @@ class Table {
         return executeQuery(sql);
     }
 
-    // call stored procedures
-
-    getMe(email, usertype) {
-        let sql = `CALL spGetMe('${email}', '${usertype}')`;
-        return executeQuery(sql);
-    }
-
 }
 
 export default Table;

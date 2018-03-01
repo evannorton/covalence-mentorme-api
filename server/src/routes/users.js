@@ -6,17 +6,6 @@ import { generateHash } from '../utils/security';
 let router = Router();
 let users = new Table('Users');
 
-router.get('/me', (req, res) => {
-    let email = req.body.email;
-    let usertype = req.body.usertype;
-    users.getMe(email, usertype)
-        .then((result) => {
-            res.send(result[0]);
-        }).catch((err) => {
-            res.send(401);
-        });
-});
-
 router.get('/:id?', (req, res) => {
     let id = req.params.id;
     if (id) {
@@ -42,7 +31,7 @@ router.post('/', (req, res) => {
     let name = req.body.name;
     let email = req.body.email;
     let usertype = req.body.usertype;
-    users.getMe(email, usertype)
+    users.find({ email, usertype })
         .then((result) => {
             if (result[0].length > 0) {
                 res.sendStatus(400);
