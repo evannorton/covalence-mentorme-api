@@ -1,12 +1,23 @@
 import { Router } from 'express';
-import Table from "../table";
+import Table from '../table';
 import { tokenMiddleware, isLoggedIn } from '../middleware/auth.mw';
-import { generateHash } from "../utils/security";
+import { generateHash } from '../utils/security';
 
 let router = Router();
-let users = new Table("Users");
+let users = new Table('Users');
 
-router.get("/:id?", (req, res) => {
+router.get('/me', (req, res) => {
+    let email = req.body.email;
+    let usertype = req.body.usertype;
+    users.getMe(email, usertype)
+        .then((result) => {
+            res.send(result[0]);
+        }).catch((err) => {
+            res.send(401);
+        });
+});
+
+router.get('/:id?', (req, res) => {
     let id = req.params.id;
     if (id) {
         users.getOne(id)
@@ -15,7 +26,7 @@ router.get("/:id?", (req, res) => {
             })
             .catch((err) => {
                 console.log(err);
-            })
+            });
     } else {
         users.getAll()
             .then((users) => {
@@ -23,11 +34,11 @@ router.get("/:id?", (req, res) => {
             })
             .catch((err) => {
                 console.log(err);
-            })
+            });
     }
 });
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
     let name = req.body.name;
     let email = req.body.email;
     let usertype = req.body.usertype;
