@@ -30,13 +30,14 @@ router.get('/:id?', (req, res) => {
 router.post('/', (req, res) => {
     let name = req.body.name;
     let email = req.body.email;
+    let password = req.body.password;
     let usertype = req.body.usertype;
     users.find({ email, usertype })
         .then((result) => {
-            if (result[0].length > 0) {
+            if (result[0]) {
                 res.sendStatus(400);
             } else {
-                generateHash(req.body.password)
+                generateHash(password)
                     .then((hash) => {
                         let user = {
                             name,
