@@ -31,23 +31,31 @@ router.post("/", (req, res) => {
     let name = req.body.name;
     let email = req.body.email;
     let usertype = req.body.usertype;
-    generateHash(req.body.password)
-        .then((hash) => {
-            let user = {
-                name,
-                email,
-                hash,
-                usertype
-            };
-            users.insert(user)
-                .then((result) => {
-                    res.send(result);
-                }).catch((err) => {
-                    res.sendStatus(500);
-                })
+    users.getMe(email, usertype)
+        .then((result) => {
+            if (result[0].length > 0) {
+                res.sendStatus(400);
+            } else {
+                generateHash(req.body.password)
+                    .then((hash) => {
+                        let user = {
+                            name,
+                            email,
+                            hash,
+                            usertype
+                        };
+                        users.insert(user)
+                            .then((result) => {
+                                res.send(result);
+                            }).catch((err) => {
+                                res.sendStatus(500);
+                            });
+                    });
+            }
         }).catch((err) => {
             console.log(err);
-        })
+        });
+
 });
 
 export default router;

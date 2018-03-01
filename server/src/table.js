@@ -52,6 +52,14 @@ class Table {
         let sql = `DELETE FROM ${this.tableName} WHERE id = ${id}`;
         return executeQuery(sql);
     }
+
+    // call stored procedures
+
+    getMe(email, usertype) {
+        let sql = `CALL spGetMe('${email}', '${usertype}')`;
+        return executeQuery(sql);
+    }
+
 }
 
 export default Table;
