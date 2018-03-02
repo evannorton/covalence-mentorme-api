@@ -8,7 +8,7 @@ router.get('/:userid', (req, res) => {
     let userid = req.params.userid;
     mentorSubjects.spMentorSubjects(userid)
         .then((mentorSubjects) => {
-            res.send(mentorSubjects);
+            res.send(mentorSubjects[0]);
         }).catch((err) => {
             console.log(err);
         })
