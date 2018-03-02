@@ -13,3 +13,5 @@ router.get('/:userid', (req, res) => {
             console.log(err);
         })
 })
+
+export default router;
