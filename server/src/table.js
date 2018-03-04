@@ -53,6 +53,18 @@ class Table {
         return executeQuery(sql);
     }
 
+    //stored procedures
+
+    spMentorSubjects(userid) {
+        let sql = `CALL spMentorSubjects(${userid})`;
+        return executeQuery(sql);
+    }
+
+    spMentorSkills(userid) {
+        let sql = `CALL spMentorSkills(${userid})`;
+        return executeQuery(sql);
+    }
+
 }
 
 export default Table;
