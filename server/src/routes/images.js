@@ -10,9 +10,9 @@ let users = new Table('Users');
 router.post('/', upload.single('image'), (req, res, next) => {
 
     let userid = req.body.userid;
-    let url = req.file.path;
+    let uri = req.file.path;
 
-    users.spUpdatePhoto(userid, url)
+    users.spUpdatePhoto(userid, uri)
         .then(() => {
             res.sendStatus(200);
         }).catch((err) => {
