@@ -65,6 +65,11 @@ class Table {
         return executeQuery(sql);
     }
 
+    spUpdatePhoto(userid, url) {
+        let sql = `CALL spUpdatePhoto(${userid}, '${url}')`;
+        return executeQuery(sql);
+    }
+
 }
 
 export default Table;
