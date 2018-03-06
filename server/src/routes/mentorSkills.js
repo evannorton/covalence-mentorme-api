@@ -11,7 +11,7 @@ router.get('/:userid', (req, res) => {
             res.send(mentorSkills[0]);
         }).catch((err) => {
             console.log(err);
-        })
-})
+        });
+});
 
 export default router;

@@ -59,8 +59,8 @@ router.post('/', (req, res) => {
                             usertype
                         };
                         users.insert(user)
-                            .then((result) => {
-                                res.send(result);
+                            .then((res) => {
+                                res.send(res);
                             }).catch((err) => {
                                 res.sendStatus(500);
                             });
