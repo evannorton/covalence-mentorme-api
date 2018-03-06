@@ -6,6 +6,9 @@ import { generateHash } from '../utils/security';
 let router = Router();
 let users = new Table('Users');
 
+let multer = require('multer');
+let upload = multer({ dest: 'images/' });
+
 router.get('/me', tokenMiddleware, isLoggedIn, (req, res) => {
     delete req.user.hash;
     console.log(req.user);
@@ -66,6 +69,21 @@ router.post('/', (req, res) => {
         }).catch((err) => {
             console.log(err);
         });
+
+});
+
+router.put('/images/:userid', upload.single('image'), (req, res, next) => {
+
+    let userid = req.params.userid;
+    let uri = req.file.path;
+
+    users.spUpdatePhoto(userid, uri)
+        .then(() => {
+            res.sendStatus(200);
+        }).catch((err) => {
+            console.log(err);
+            res.sendStatus(500);
+        })
 
 });
 
