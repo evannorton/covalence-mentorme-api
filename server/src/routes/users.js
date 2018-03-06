@@ -77,7 +77,7 @@ router.put('/images/:userid', upload.single('image'), (req, res, next) => {
     let userid = req.params.userid;
     let uri = req.file.path;
 
-    users.spUpdatePhoto(userid, uri)
+    users.spUpdateImage(userid, uri)
         .then(() => {
             res.sendStatus(200);
         }).catch((err) => {
