@@ -5,7 +5,6 @@ import authRouter from './auth';
 import usersRouter from './users';
 import mentorSubjectsRouter from './mentorSubjects';
 import mentorSkillsRouter from './mentorSkills';
-import imagesRouter from './images';
 
 let router = Router();
 
@@ -15,6 +14,5 @@ router.use('/users', usersRouter);
 
 router.use('/mentorSubjects', mentorSubjectsRouter);
 router.use('/mentorSkills', mentorSkillsRouter);
-router.use('/images', imagesRouter);
 
 export default router;
