@@ -12,7 +12,7 @@ router.post('/', (req, res) => {
         subjectid
     }
     mentorSubjects.insert(mentorSubject)
-        .then((res) => {
+        .then(() => {
             res.sendStatus(200);
         }).catch((err) => {
             console.log(err);
@@ -24,7 +24,7 @@ router.delete('/', (req, res) => {
     let userid = req.body.userid;
     let subjectid = req.body.subjectid;
     mentorSubjects.spDeleteMentorSubject(userid, subjectid)
-        .then((res) => {
+        .then(() => {
             res.sendStatus(200);
         }).catch((err) => {
             console.log(err);
