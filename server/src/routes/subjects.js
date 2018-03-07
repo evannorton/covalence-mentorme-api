@@ -14,7 +14,7 @@ router.get('/users/:userid', (req, res) => {
         });
 });
 
-router.get('categories/:categoryid', (req, res) => {
+router.get('/categories/:categoryid', (req, res) => {
     let categoryid = req.params.categoryid;
     subjects.find({ categoryid })
         .then((subjects) => {
