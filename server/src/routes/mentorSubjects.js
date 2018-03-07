@@ -6,7 +6,7 @@ let mentorSubjects = new Table('mentorSubjects');
 
 router.get('/:userid', (req, res) => {
     let userid = req.params.userid;
-    mentorSubjects.spMentorSubjects(userid)
+    mentorSubjects.spGetMentorSubjects(userid)
         .then((mentorSubjects) => {
             res.send(mentorSubjects[0]);
         }).catch((err) => {
