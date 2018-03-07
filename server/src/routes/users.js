@@ -72,12 +72,24 @@ router.post('/', (req, res) => {
 
 });
 
-router.put('/images/:userid', upload.single('image'), (req, res, next) => {
+router.put('/:id', (req, res) => {
+    let id = req.params.userid;
+    let row = req.body;
 
-    let userid = req.params.userid;
+    users.update(id, row)
+        .then(() => {
+            res.sendStatus(200);
+        }).catch((err) => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
+router.put('/images/:id', upload.single('image'), (req, res, next) => {
+    let id = req.params.userid;
     let uri = req.file.path;
 
-    users.update(userid, { image: uri })
+    users.update(id, { image: uri })
         .then(() => {
             res.sendStatus(200);
         }).catch((err) => {

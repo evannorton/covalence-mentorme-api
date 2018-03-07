@@ -65,11 +65,6 @@ class Table {
         return executeQuery(sql);
     }
 
-    spUpdateImage(userid, url) {
-        let sql = `CALL spUpdateImage(${userid}, '${url}')`;
-        return executeQuery(sql);
-    }
-
     spDeleteMentorSubject(userid, subjectid) {
         let sql = `CALL spDeleteMentorSubject(${userid}, ${subjectid})`;
         return executeQuery(sql);
