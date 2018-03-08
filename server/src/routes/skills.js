@@ -27,7 +27,7 @@ router.get('/:userid', (req, res) => {
 
 router.post('/', (req, res) => {
     let name = req.body.name;
-    skills.post({ name })
+    skills.insert({ name })
         .then((id) => {
             res.send(id);
         }).catch((err) => {
