@@ -3,30 +3,33 @@ import Table from '../table';
 import { tokenMiddleware, isLoggedIn } from '../middleware/auth.mw';
 import { generateHash } from '../utils/security';
 
-import AWS from 'aws-sdk';
-import multer from 'multer';
-import multerS3 from 'multer-s3';
-import credentials from '../config/s3config';
+// import AWS from 'aws-sdk';
+// import multer from 'multer';
+// import multerS3 from 'multer-s3';
 
 let router = Router();
 let users = new Table('Users');
 
+// AWS.config.update({
+//     secretAccessKey: AWS_ACCESS_KEY_ID,
+//     accessKeyId: AWS_SECRET_ACCESS_KEY,
+//     region: 'us-east-2'
+// });
 
-AWS.config.update(credentials);
-let s3 = new AWS.S3();
+// let s3 = new AWS.S3();
 
-let upload = multer({
-    storage: multerS3({
-        s3,
-        bucket: 'en-mentorme',
-        metadata: function (req, file, cb) {
-            cb(null, { fildName: file.fieldname });
-        },
-        key: function (req, file, cb) {
-            cb(null, Date.now() + '.jpg')
-        }
-    })
-});
+// let upload = multer({
+//     storage: multerS3({
+//         s3,
+//         bucket: S3_BUCKET_NAME,
+//         metadata: function (req, file, cb) {
+//             cb(null, { fildName: file.fieldname });
+//         },
+//         key: function (req, file, cb) {
+//             cb(null, Date.now() + '.jpg')
+//         }
+//     })
+// });
 
 router.get('/me', tokenMiddleware, isLoggedIn, (req, res) => {
     delete req.user.hash;
@@ -104,18 +107,18 @@ router.put('/:id', (req, res) => {
         });
 });
 
-router.put('/images/:id', upload.single('image'), (req, res, next) => {
-    let id = req.params.userid;
-    let uri = req.file.location;
+// router.put('/images/:id', upload.single('image'), (req, res, next) => {
+//     let id = req.params.userid;
+//     let uri = req.file.location;
 
-    users.update(id, { image: uri })
-        .then(() => {
-            res.sendStatus(200);
-        }).catch((err) => {
-            console.log(err);
-            res.sendStatus(500);
-        });
+//     users.update(id, { image: uri })
+//         .then(() => {
+//             res.sendStatus(200);
+//         }).catch((err) => {
+//             console.log(err);
+//             res.sendStatus(500);
+//         });
 
-});
+// });
 
 export default router;
