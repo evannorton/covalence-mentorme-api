@@ -8,7 +8,7 @@ router.post('/', (req, res) => {
     let userid = req.body.userid;
     let skillid = req.body.skillid;
     let mentorSkill = { userid, skillid }
-    mentorSkills.post(mentorSkill)
+    mentorSkills.insert(mentorSkill)
         .then(() => {
             res.sendStatus(200);
         }).catch((err) => {
