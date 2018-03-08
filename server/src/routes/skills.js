@@ -10,8 +10,7 @@ router.get('/name', (req, res) => {
         .then((skills) => {
             res.send(skills[0].id);
         }).catch((err) => {
-            console.log(err);
-            res.sendStatus(500);
+            throw err;
         });
 });
 
