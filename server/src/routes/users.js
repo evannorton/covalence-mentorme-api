@@ -3,11 +3,30 @@ import Table from '../table';
 import { tokenMiddleware, isLoggedIn } from '../middleware/auth.mw';
 import { generateHash } from '../utils/security';
 
+import AWS from 'aws-sdk';
+import multer from 'multer';
+import multerS3 from 'multer-s3';
+import credentials from '../config/s3config';
+
 let router = Router();
 let users = new Table('Users');
 
-let multer = require('multer');
-let upload = multer({ dest: 'images/' });
+
+AWS.config.update(credentials);
+let s3 = new AWS.S3();
+
+let upload = multer({
+    storage: multerS3({
+        s3,
+        bucket: 'en-mentorme',
+        metadata: function (req, file, cb) {
+            cb(null, { fildName: file.fieldname });
+        },
+        key: function (req, file, cb) {
+            cb(null, Date.now() + '.jpg')
+        }
+    })
+});
 
 router.get('/me', tokenMiddleware, isLoggedIn, (req, res) => {
     delete req.user.hash;
@@ -87,7 +106,7 @@ router.put('/:id', (req, res) => {
 
 router.put('/images/:id', upload.single('image'), (req, res, next) => {
     let id = req.params.userid;
-    let uri = req.file.path;
+    let uri = req.file.location;
 
     users.update(id, { image: uri })
         .then(() => {
