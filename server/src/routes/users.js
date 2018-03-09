@@ -103,8 +103,9 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    let id = req.params.userid;
+    let id = req.params.id;
     let row = req.body;
+    console.log(req.body);
 
     users.update(id, row)
         .then(() => {
