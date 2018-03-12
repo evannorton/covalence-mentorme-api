@@ -4,6 +4,17 @@ import Table from '../table';
 let router = Router();
 let mentorSubjects = new Table('mentorSubjects');
 
+router.get('/subjects/:subjectid', (req, res) => {
+    let subjectid = req.params.subjectid;
+    mentorSubjects.find({ subjectid })
+        .then((mentorSubjects) => {
+            res.send(mentorSubjects);
+        }).catch((err) => {
+            console.log(err);
+            res.send(500);
+        });
+});
+
 router.post('/', (req, res) => {
     let userid = req.body.userid;
     let subjectid = req.body.subjectid;

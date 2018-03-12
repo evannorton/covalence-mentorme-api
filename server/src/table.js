@@ -70,6 +70,11 @@ class Table {
         return executeQuery(sql);
     }
 
+    spDeleteMentorSkill(userid, skillid) {
+        let sql = `CALL spDeleteMentorSkill(${userid}, ${skillid})`;
+        return executeQuery(sql);
+    }
+
 }
 
 export default Table;

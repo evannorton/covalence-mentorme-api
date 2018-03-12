@@ -6,7 +6,6 @@ if (!env.DB_HOST) {
     env = require('./config').default;
 }
 
-
 let pool = mysql.createPool({
     connectionLimit: 10,
     host: env.DB_HOST,

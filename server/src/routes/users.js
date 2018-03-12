@@ -3,11 +3,41 @@ import Table from '../table';
 import { tokenMiddleware, isLoggedIn } from '../middleware/auth.mw';
 import { generateHash } from '../utils/security';
 
+import AWS from 'aws-sdk';
+import multer from 'multer';
+import multerS3 from 'multer-s3';
+
 let router = Router();
 let users = new Table('Users');
 
-let multer = require('multer');
-let upload = multer({ dest: 'images/' });
+let env = process.env;
+
+if (!env.AWS_ACCESS_KEY_ID) {
+    env = require('../config/s3config').default;
+}
+
+console.log(env.AWS_ACCESS_KEY_ID);
+
+AWS.config.update({
+    secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: env.AWS_ACCESS_KEY_ID,
+    region: 'us-east-2'
+});
+
+let s3 = new AWS.S3();
+
+let upload = multer({
+    storage: multerS3({
+        s3,
+        bucket: env.S3_BUCKET_NAME,
+        metadata: function (req, file, cb) {
+            cb(null, { fildName: file.fieldname });
+        },
+        key: function (req, file, cb) {
+            cb(null, Date.now() + '.jpg')
+        }
+    })
+});
 
 router.get('/me', tokenMiddleware, isLoggedIn, (req, res) => {
     delete req.user.hash;
@@ -73,7 +103,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    let id = req.params.userid;
+    let id = req.params.id;
     let row = req.body;
 
     users.update(id, row)
@@ -85,9 +115,10 @@ router.put('/:id', (req, res) => {
         });
 });
 
-router.put('/images/:id', upload.single('image'), (req, res, next) => {
+router.put('/images/:userid', upload.single('image'), (req, res, next) => {
     let id = req.params.userid;
-    let uri = req.file.path;
+    let uri = req.file.location;
+    console.log(uri);
 
     users.update(id, { image: uri })
         .then(() => {

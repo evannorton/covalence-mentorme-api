@@ -4,11 +4,12 @@ import Table from '../table';
 let router = Router();
 let skills = new Table('Skills');
 
-router.get('/name', (req, res) => {
-    let name = req.body.name;
+router.get('/names/:name', (req, res) => {
+    let name = req.params.name;
     skills.find({ name })
         .then((skills) => {
-            res.send(skills[0].id);
+            console.log(skills[0]);
+            res.send(skills[0]);
         }).catch((err) => {
             console.log(err);
             res.sendStatus(500);
@@ -27,7 +28,7 @@ router.get('/:userid', (req, res) => {
 
 router.post('/', (req, res) => {
     let name = req.body.name;
-    skills.post({ name })
+    skills.insert({ name })
         .then((id) => {
             res.send(id);
         }).catch((err) => {
