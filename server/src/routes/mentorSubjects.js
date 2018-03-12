@@ -6,9 +6,9 @@ let mentorSubjects = new Table('mentorSubjects');
 
 router.get('/subjects/:subjectid', (req, res) => {
     let subjectid = req.params.subjectid;
-    mentorSubjects.find({ subjectid })
+    mentorSubjects.spGetSubjectMentors(subjectid)
         .then((mentorSubjects) => {
-            res.send(mentorSubjects);
+            res.send(mentorSubjects[0]);
         }).catch((err) => {
             console.log(err);
             res.send(500);

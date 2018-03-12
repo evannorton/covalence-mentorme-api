@@ -60,6 +60,11 @@ class Table {
         return executeQuery(sql);
     }
 
+    spGetSubjectMentors(subjectid) {
+        let sql = `CALL spGetSubjectMentors(${subjectid})`;
+        return executeQuery(sql);
+    }
+
     spGetMentorSkills(userid) {
         let sql = `CALL spGetMentorSkills(${userid})`;
         return executeQuery(sql);
