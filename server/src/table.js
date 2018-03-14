@@ -55,18 +55,28 @@ class Table {
 
     //stored procedures
 
-    spMentorSubjects(userid) {
-        let sql = `CALL spMentorSubjects(${userid})`;
+    spGetMentorSubjects(userid) {
+        let sql = `CALL spGetMentorSubjects(${userid})`;
         return executeQuery(sql);
     }
 
-    spMentorSkills(userid) {
-        let sql = `CALL spMentorSkills(${userid})`;
+    spGetSubjectMentors(subjectid) {
+        let sql = `CALL spGetSubjectMentors(${subjectid})`;
         return executeQuery(sql);
     }
 
-    spUpdatePhoto(userid, url) {
-        let sql = `CALL spUpdatePhoto(${userid}, '${url}')`;
+    spGetMentorSkills(userid) {
+        let sql = `CALL spGetMentorSkills(${userid})`;
+        return executeQuery(sql);
+    }
+
+    spDeleteMentorSubject(userid, subjectid) {
+        let sql = `CALL spDeleteMentorSubject(${userid}, ${subjectid})`;
+        return executeQuery(sql);
+    }
+
+    spDeleteMentorSkill(userid, skillid) {
+        let sql = `CALL spDeleteMentorSkill(${userid}, ${skillid})`;
         return executeQuery(sql);
     }
 
