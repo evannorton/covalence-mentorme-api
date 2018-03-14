@@ -1,5 +1,6 @@
+import env from '../config';
 import stripeLoader from 'stripe';
-const stripe = stripeLoader(process.env.STRIPE_SK); // define secret key in ENV_VAR
+const stripe = stripeLoader(env.STRIPE_SECRET);
 
 function charge(token, amt) {
     // returning a promise, so when we call .charge, we can use .then(...)

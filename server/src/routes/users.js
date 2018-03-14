@@ -6,15 +6,10 @@ import { generateHash } from '../utils/security';
 import AWS from 'aws-sdk';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
+import env from '../config';
 
 let router = Router();
 let users = new Table('Users');
-
-let env = process.env;
-
-if (!env.AWS_ACCESS_KEY_ID) {
-    env = require('../config/s3config').default;
-}
 
 console.log(env.AWS_ACCESS_KEY_ID);
 
