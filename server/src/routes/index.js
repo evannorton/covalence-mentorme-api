@@ -8,13 +8,13 @@ import subjectsRouter from './subjects';
 import skillsRouter from './skills';
 import mentorSubjectsRouter from './mentorSubjects';
 import mentorSkillsRouter from './mentorSkills';
-import stripeDonationsRouter from './stripeDonations';
+import paymentsRouter from './payments';
 import availabilityRouter from './availability';
 
 let router = Router();
 
 router.use('/auth', authRouter);
-router.use('/donate', stripeDonationsRouter);
+router.use('/payments', paymentsRouter);
 router.use('/users', usersRouter);
 router.use('/categories', categoriesRouter);
 router.use('/subjects', subjectsRouter);
