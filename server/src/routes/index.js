@@ -21,7 +21,6 @@ router.use('/subjects', subjectsRouter);
 router.use('/skills', skillsRouter);
 router.use('/mentorSubjects', mentorSubjectsRouter);
 router.use('/mentorSkills', mentorSkillsRouter);
-router.use('/images', imagesRouter);
 router.use('/availability', availabilityRouter);
 
 export default router;
