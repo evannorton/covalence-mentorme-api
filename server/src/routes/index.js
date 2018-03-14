@@ -8,6 +8,7 @@ import subjectsRouter from './subjects';
 import skillsRouter from './skills';
 import mentorSubjectsRouter from './mentorSubjects';
 import mentorSkillsRouter from './mentorSkills';
+import availabilitiesRouter from './availabilities';
 
 let router = Router();
 
@@ -18,5 +19,6 @@ router.use('/subjects', subjectsRouter);
 router.use('/skills', skillsRouter);
 router.use('/mentorSubjects', mentorSubjectsRouter);
 router.use('/mentorSkills', mentorSkillsRouter);
+router.use('/availabilities', availabilitiesRouter);
 
 export default router;
