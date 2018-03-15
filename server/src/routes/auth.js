@@ -17,6 +17,4 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-router.put()
-
 export default router;
