@@ -36,4 +36,14 @@ router.post('/', (req, res) => {
         });
 });
 
+router.put('/:id', (req, res) => {
+    let id = req.params.id;
+    appointments.update(id, req.body)
+        .then(() => {
+            res.sendStatus(200)
+        }).catch((err) => {
+            console.log(err);
+        });
+});
+
 export default router;
