@@ -44,4 +44,9 @@ function createCharge(amount, customerId, accountId) {
     });
 }
 
-export { createAccount, createCustomer, createCharge };
+function createReceipt(accountId) {
+    return stripe.transfers.list({
+        destination: accountId,
+    });
+}
+export { createAccount, createCustomer, createCharge, createReceipt };

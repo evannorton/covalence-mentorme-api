@@ -41,6 +41,18 @@ router.get('/me', tokenMiddleware, isLoggedIn, (req, res) => {
     res.json(req.user);
 });
 
+router.get('/charges/:id', async (req, res) => {
+    try {
+        let user = await users.getOne(req.params.id);
+        let transfers = await stripeService.createReceipt(user.stripeid);
+        res.json(transfers);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+
+})
+
 router.get('/:id?', (req, res) => {
     let id = req.params.id;
     if (id) {
