@@ -1,10 +1,5 @@
 import mysql from 'mysql';
-
-let env = process.env;
-
-if (!env.DB_HOST) {
-    env = require('./config').default;
-}
+import env from '.';
 
 let pool = mysql.createPool({
     connectionLimit: 10,

@@ -2,19 +2,15 @@ import { Router } from 'express';
 import Table from '../table';
 import { tokenMiddleware, isLoggedIn } from '../middleware/auth.mw';
 import { generateHash } from '../utils/security';
+import * as stripeService from '../utils/stripe';
 
 import AWS from 'aws-sdk';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
+import env from '../config';
 
 let router = Router();
 let users = new Table('Users');
-
-let env = process.env;
-
-if (!env.AWS_ACCESS_KEY_ID) {
-    env = require('../config/s3config').default;
-}
 
 console.log(env.AWS_ACCESS_KEY_ID);
 
@@ -55,6 +51,7 @@ router.get('/:id?', (req, res) => {
             })
             .catch((err) => {
                 console.log(err);
+                res.sendStatus(500);
             });
     } else {
         users.getAll()
@@ -66,40 +63,53 @@ router.get('/:id?', (req, res) => {
             })
             .catch((err) => {
                 console.log(err);
+
+                res.sendStatus(500);
             });
     }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     let name = req.body.name;
     let email = req.body.email;
     let password = req.body.password;
     let usertype = req.body.usertype;
-    users.find({ email, usertype })
-        .then((result) => {
-            if (result[0]) {
-                res.sendStatus(400);
-            } else {
-                generateHash(password)
-                    .then((hash) => {
-                        let user = {
-                            name,
-                            email,
-                            hash,
-                            usertype
-                        };
-                        users.insert(user)
-                            .then(() => {
-                                res.sendStatus(200);
-                            }).catch((err) => {
-                                res.sendStatus(500);
-                            });
-                    });
-            }
-        }).catch((err) => {
-            console.log(err);
-        });
+    try {
+        let result = await users.find({ email, usertype });
 
+        if (result[0]) {
+            res.sendStatus(400);
+
+            return;
+        }
+
+        let hash = await generateHash(password);
+        let user = {
+            name,
+            email,
+            hash,
+            usertype
+        };
+
+        let stripeAccount;
+
+        if (usertype === 'Mentor') {
+            stripeAccount = await stripeService.createAccount(email);
+        } else {
+            stripeAccount = await stripeService.createCustomer(email);
+        }
+
+        user.stripeid = stripeAccount.id;
+
+        await users.insert(user);
+
+        res.sendStatus(200);
+
+    } catch (err) {
+        console.log(err);
+
+        res.sendStatus(500);
+    }
 });
 
 router.put('/:id', (req, res) => {

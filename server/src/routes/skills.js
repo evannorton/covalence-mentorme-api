@@ -8,7 +8,6 @@ router.get('/names/:name', (req, res) => {
     let name = req.params.name;
     skills.find({ name })
         .then((skills) => {
-            console.log(skills[0]);
             res.send(skills[0]);
         }).catch((err) => {
             console.log(err);
@@ -20,7 +19,7 @@ router.get('/:userid', (req, res) => {
     let userid = req.params.userid;
     skills.spGetMentorSkills(userid)
         .then((skills) => {
-            res.send(skills);
+            res.send(skills[0]);
         }).catch((err) => {
             console.log(err);
         });

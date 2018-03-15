@@ -1,4 +1,3 @@
 node_modules
 server/lib
 server/src/config/config.js
-server/src/config/s3config.js

@@ -1,3 +1,6 @@
+import 'babel-core/register';
+import 'babel-polyfill';
+
 import { join } from "path";
 import express from "express";
 import routes from "./routes";
