@@ -41,9 +41,9 @@ router.get('/me', tokenMiddleware, isLoggedIn, (req, res) => {
     res.json(req.user);
 });
 
-router.get('/charges/:id', async (req, res) => {
+router.get('/charges', tokenMiddleware, isLoggedIn, async (req, res) => {
     try {
-        let user = await users.getOne(req.params.id);
+        let user = await users.getOne(req.user.id);
         let transfers = await stripeService.createReceipt(user.stripeid);
         res.json(transfers);
     } catch (e) {
