@@ -15,4 +15,15 @@ router.get('/:userid', (req, res) => {
         });
 });
 
+router.put('/:id', (req, res) => {
+    let id = req.params.id;
+    let row = req.body;
+    availability.update(id, req.body)
+        .then(() => {
+            res.sendStatus(200);
+        }).catch((err) => {
+            console.log(err);
+        });
+});
+
 export default router;

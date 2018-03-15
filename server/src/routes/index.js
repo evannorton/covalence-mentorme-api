@@ -10,6 +10,7 @@ import mentorSubjectsRouter from './mentorSubjects';
 import mentorSkillsRouter from './mentorSkills';
 import paymentsRouter from './payments';
 import availabilityRouter from './availability';
+import appointmentsRouter from './appointments';
 
 let router = Router();
 
@@ -22,5 +23,6 @@ router.use('/skills', skillsRouter);
 router.use('/mentorSubjects', mentorSubjectsRouter);
 router.use('/mentorSkills', mentorSkillsRouter);
 router.use('/availability', availabilityRouter);
+router.use('/appointments', appointmentsRouter);
 
 export default router;
