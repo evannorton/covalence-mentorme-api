@@ -17,7 +17,7 @@ router.get('/mentors/:mentorid/:confirmed', (req, res) => {
 
 router.get('/students/:studentid/:confirmed', (req, res) => {
     let studentid = req.params.studentid;
-    let confirmed = req.parms.confirmed;
+    let confirmed = req.params.confirmed;
     appointments.find({ studentid, confirmed })
         .then((appointments) => {
             res.send(appointments);
