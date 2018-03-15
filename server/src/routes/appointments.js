@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
     let appointment = req.body;
     appointments.insert(appointment)
         .then(() => {
-            res.sendStatus(200)
+            res.sendStatus(200);
         }).catch((err) => {
             console.log(err);
         });
@@ -40,10 +40,20 @@ router.put('/:id', (req, res) => {
     let id = req.params.id;
     appointments.update(id, req.body)
         .then(() => {
-            res.sendStatus(200)
+            res.sendStatus(200);
         }).catch((err) => {
             console.log(err);
         });
+});
+
+router.delete('/:id', (req, res) => {
+    let id = req.params.id;
+    appointments.delete(id)
+        .then(() => {
+            res.sendStatus(200);
+        }).catch((err) => {
+            console.log(err);
+        })
 });
 
 export default router;
