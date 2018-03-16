@@ -4,6 +4,11 @@ import Table from '../table';
 
 let router = Router();
 let User = new Table('Users');
+let formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+});
 
 router.post('/', async (req, res) => {
     let studentid = req.body.studentid;
@@ -20,7 +25,12 @@ router.post('/', async (req, res) => {
             return;
         }
 
-        await stripeService.createCharge(amount, student.stripeid, mentor.stripeid);
+        await stripeService.createCharge(
+            `${student.name} paid you ${formatter.format(Math.ceil(amount * 0.95) / 100)} after fees`,
+            amount,
+            student.stripeid,
+            mentor.stripeid
+        );
 
         res.status(200).json({ message: 'success' });
     } catch (e) {

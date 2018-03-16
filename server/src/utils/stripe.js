@@ -34,19 +34,38 @@ function createCustomer(email) {
 }
 
 
-function createCharge(amount, customerId, accountId) {
+function createCharge(description, amount, customerId, accountId) {
     return stripe.charges.create({
         amount,
         currency: 'usd',
+        description,
         customer: customerId,
         destination: accountId,
         application_fee: Math.ceil(amount * 0.05) // 5% application fee
     });
 }
 
-function createReceipt(accountId) {
-    return stripe.transfers.list({
-        destination: accountId,
-    });
+async function createReceipt(accountId) {
+    try {
+        const transfers = await stripe.transfers.list({
+            destination: accountId
+        });
+
+        let transferData = transfers.data;
+
+        for (let i = 0; i < transferData.length; i++) {
+            let transfer = transferData[i];
+
+            let charge = await stripe.charges.retrieve(transfer.source_transaction);
+
+            transfer.description = charge.description;
+        }
+
+        return transfers;
+    } catch (e) {
+        console.log(e);
+
+        return { data: [] };
+    }
 }
 export { createAccount, createCustomer, createCharge, createReceipt };
