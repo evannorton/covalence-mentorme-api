@@ -25,5 +25,23 @@ router.put('/:id', (req, res) => {
             console.log(err);
         });
 });
+router.post('/', (req, res) => {
+    let userid = req.body.userid;
+    let date = req.body.date;
+    let starttime = req.body.starttime;
+    let endtime = req.body.endtime;
+    availability.insert({
+        userid,
+        date,
+        starttime,
+        endtime
+    })
+        .then((id) => {
+            res.send(id);
+        }).catch((err) => {
+            console.log(err);
+            res.sendStatus(400);
+        });
+});
 
 export default router;
