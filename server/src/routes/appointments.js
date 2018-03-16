@@ -26,6 +26,28 @@ router.get('/students/:studentid/:confirmed', (req, res) => {
         });
 });
 
+router.get('/mentor/:mentorid', (req, res) => {
+    let mentorid = req.params.mentorid;
+    appointments.spMentorAgenda(mentorid)
+        .then((mentorAgenda) => {
+            res.send(mentorAgenda[0]);
+        }).catch((err) => {
+            console.log(err);
+            res.send(500);
+        });
+});
+
+router.get('/student/:studentid', (req, res) => {
+    let studentid = req.params.studentid;
+    appointments.spStudentAgenda(studentid)
+        .then((studentAgenda) => {
+            res.send(studentAgenda[0]);
+        }).catch((err) => {
+            console.log(err);
+            res.send(500);
+        });
+});
+
 router.post('/', (req, res) => {
     let appointment = req.body;
     appointments.insert(appointment)
