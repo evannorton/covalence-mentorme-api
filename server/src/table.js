@@ -83,7 +83,7 @@ class Table {
         let sql = `Call spMentorAgenda(${userid})`;
         return executeQuery(sql);
     }
-    spstudentAgenda(userid){
+    spStudentAgenda(userid){
         let sql = `Call spStudentAgenda(${userid})`;
         return executeQuery(sql);
     }
