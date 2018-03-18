@@ -14,13 +14,23 @@ router.get('/users/:userid', (req, res) => {
         });
 });
 
-router.get('/', (req, res) => {
-    subjects.getAll()
-        .then((subjects) => {
-            res.send(subjects);
-        }).catch((err) => {
-            console.log(err);
-        });
+router.get('/:id?', (req, res) => {
+    let id = req.params.id;
+    if (id) {
+        subjects.getOne(id)
+            .then((subject) => {
+                res.send(subject);
+            }).catch((err) => {
+                console.log(err);
+            })
+    } else {
+        subjects.getAll()
+            .then((subjects) => {
+                res.send(subjects);
+            }).catch((err) => {
+                console.log(err);
+            });
+    }
 });
 
 export default router;

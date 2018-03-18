@@ -79,6 +79,14 @@ class Table {
         let sql = `CALL spDeleteMentorSkill(${userid}, ${skillid})`;
         return executeQuery(sql);
     }
+    spMentorAgenda(userid){
+        let sql = `Call spMentorAgenda(${userid})`;
+        return executeQuery(sql);
+    }
+    spStudentAgenda(userid){
+        let sql = `Call spStudentAgenda(${userid})`;
+        return executeQuery(sql);
+    }
 
 }
 
