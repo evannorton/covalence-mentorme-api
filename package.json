@@ -1,5 +1,5 @@
 {
-    "name": "in-class-db-api",
+    "name": "mentorme-api",
     "version": "1.0.0",
     "description": "",
     "main": "server/lib/index.js",
